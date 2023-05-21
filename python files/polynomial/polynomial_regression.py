@@ -25,10 +25,10 @@ import matplotlib.pyplot as plt
 # load data
 training_data = scipy.io.loadmat('training_40.mat')
 testing_data = scipy.io.loadmat('testing.mat')
-inputs = np.float32(training_data["Xc_black_training"])
-targets = training_data["Xw_black_training"]
-test_inputs = testing_data["Xc_black_testing"]
-test_targets = testing_data["Xw_black_testing"]
+inputs = np.float32(training_data["Xc_black"])
+targets = training_data["Xw_black"]
+test_inputs = testing_data["Xc_black_test"]
+test_targets = testing_data["Xw_black_test"]
 
 z = np.polyfit(inputs[:,0], targets[:,2], 2)
 print(z)
@@ -55,11 +55,6 @@ poly_x_values = poly_model.fit_transform(x_values)
 print(f'initial values {x_values[0]}\nMapped to {poly_x_values[0]}')
 
 
-# x_values = test_inputs
-# y_values = test_targets[:,0]
-
-# [1, a=5, b=2940, a^2=25, 5*2940=14700, b^2=8643600]
-
 # let's fit the model
 poly_model.fit(poly_x_values, y_values)
 
@@ -77,21 +72,3 @@ regression_model.coef_
 regression_model.intercept_
 
 print(mean_squared_error(y_values, y_pred, squared=False))
-
-# check our accuracy for each degree, the lower the error the better!
-# number_degrees = [1,2,3,4,5]
-# plt_mean_squared_error = []
-# for degree in number_degrees:
-#     poly_model = PolynomialFeatures(degree=degree)
-  
-#     poly_x_values = poly_model.fit_transform(x_values)
-#     poly_model.fit(poly_x_values, y_values)
-  
-#     regression_model = LinearRegression()
-#     regression_model.fit(poly_x_values, y_values)
-#     y_pred = regression_model.predict(poly_x_values)
-  
-#     plt_mean_squared_error.append(mean_squared_error(y_values, y_pred, squared=False))
-  
-# plt.scatter(number_degrees,plt_mean_squared_error, color="green")
-# plt.plot(number_degrees,plt_mean_squared_error, color="red")
